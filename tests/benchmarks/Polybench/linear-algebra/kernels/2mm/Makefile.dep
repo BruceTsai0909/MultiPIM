@@ -1,1 +1,3 @@
+2mm.o: 2mm.c ../../../utilities/polybench.h \
+ /home/chunting/pim_graph_mining/MultiPIM/misc/hooks/zsim_hooks.h 2mm.h
 polybench.o: ../../../utilities/polybench.c

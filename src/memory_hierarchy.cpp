@@ -59,7 +59,7 @@ WritePolicy WritePolicyType(const char * name){
     else if (policyStr == "WriteThrough")
         return WRITETHROUGH;
     else
-        assert_msg(0,"Unsurported cache write policy name, %s",name)
+        assert_msg(0,"Unsurported cache write policy name, %s",name);
     return WRITEBACK;
 }
 

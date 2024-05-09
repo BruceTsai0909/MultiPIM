@@ -171,29 +171,35 @@ class PrintExpr {
 
 
 #ifndef NASSERT
-#define assert(expr) \
-if (unlikely(!(expr))) { \
-    std::stringstream __assert_ss__LINE__; (PrintExpr(__assert_ss__LINE__)->*expr); \
-    fprintf(logFdErr, "%sFailed assertion on %s:%d '%s' (with '%s')\n", logHeader, __FILE__, __LINE__, #expr, __assert_ss__LINE__.str().c_str()); \
-    fflush(logFdErr); \
-    *reinterpret_cast<int*>(0L) = 42; /*SIGSEGVs*/ \
-    exit(1); \
-};
+#define assert(expr)                                   \
+do {                                                   \
+    if (unlikely(!(expr))) {                           \
+        std::stringstream __assert_ss__LINE__;         \
+        (PrintExpr(__assert_ss__LINE__)->*expr);       \
+        fprintf(logFdErr, "%sFailed assertion on %s:%d '%s' (with '%s')\n", logHeader, __FILE__, __LINE__, #expr, __assert_ss__LINE__.str().c_str()); \
+        fflush(logFdErr);                              \
+        *reinterpret_cast<int*>(0L) = 42; /*SIGSEGVs*/ \
+        exit(1);                                       \
+    }                                                  \
+} while(0)
 
-#define assert_msg(cond, args...) \
-if (unlikely(!(cond))) { \
-    fprintf(logFdErr, "%sFailed assertion on %s:%d: ", logHeader, __FILE__, __LINE__); \
-    fprintf(logFdErr, args); \
-    fprintf(logFdErr, "\n"); \
-    fflush(logFdErr); \
-    *reinterpret_cast<int*>(0L) = 42; /*SIGSEGVs*/ \
-    exit(1); \
-};
+#define assert_msg(cond, args...)                      \
+do {                                                   \
+    if (unlikely(!(cond))) {                           \
+        fprintf(logFdErr, "%sFailed assertion on %s:%d: ", logHeader, __FILE__, __LINE__); \
+        fprintf(logFdErr, args);                       \
+        fprintf(logFdErr, "\n");                       \
+        fflush(logFdErr);                              \
+        *reinterpret_cast<int*>(0L) = 42; /*SIGSEGVs*/ \
+        exit(1);                                       \
+    }                                                  \
+} while(0)
+
 #else
 // Avoid unused warnings, never emit any code
 // see http://cnicholson.net/2009/02/stupid-c-tricks-adventures-in-assert/
-#define assert(cond) do { (void)sizeof(cond); } while (0);
-#define assert_msg(cond, args...) do { (void)sizeof(cond); } while (0);
+#define assert(cond) do { (void)sizeof(cond); } while (0)
+#define assert_msg(cond, args...) do { (void)sizeof(cond); } while (0)
 #endif
 
 #define checkpoint()                                            \

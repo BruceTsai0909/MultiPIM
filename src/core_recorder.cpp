@@ -137,8 +137,10 @@ void CoreRecorder::recordAccess(uint64_t startCycle) {
         prevRespCycle = tr.respCycle;
         assert(prevRespEvent);
 
-        origPrevResp->produceCrossings(&eventRecorder);
-        eventRecorder.getCrossingStack().clear();
+        if (zinfo->numDomains > 1) {
+            origPrevResp->produceCrossings(&eventRecorder);
+            eventRecorder.getCrossingStack().clear();
+        }
         return;
     }
     if (IsGet(tr.type)) {

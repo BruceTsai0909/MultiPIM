@@ -117,9 +117,9 @@ public:
     void set_pu_instr_buffer_size(int size) { pu_instr_buffer_size = size; }
     int get_pu_instr_buffer_size() const { return pu_instr_buffer_size; }
 
-    bool enable_data_mem_network_no_latency(bool no_latency) { data_mem_net_no_latency = no_latency; }
+    void enable_data_mem_network_no_latency(bool no_latency) { data_mem_net_no_latency = no_latency; }
     bool data_mem_network_no_latency() const{ return data_mem_net_no_latency; }
-    bool enable_ptw_mem_network_no_latency(bool no_latency) { ptw_mem_net_no_latency = no_latency; }
+    void enable_ptw_mem_network_no_latency(bool no_latency) { ptw_mem_net_no_latency = no_latency; }
     bool ptw_mem_network_no_latency() const{ return ptw_mem_net_no_latency; }
     void set_mem_network_no_latency_type(int type) 
     {

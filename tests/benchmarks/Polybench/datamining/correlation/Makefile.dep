@@ -1,1 +1,4 @@
+correlation.o: correlation.c ../../utilities/polybench.h \
+ /home/chunting/pim_graph_mining/MultiPIM/misc/hooks/zsim_hooks.h \
+ correlation.h
 polybench.o: ../../utilities/polybench.c

@@ -369,6 +369,7 @@ int main(int argc, char *argv[]) {
             procFile = realpath(argv[2], nullptr);
             outputDir = realpath(argv[3], nullptr);
             if( access(outputDir, F_OK) != 0){
+                info("OutputDir: %s\n", outputDir);
                 perror("Output dir not exist!\n");
                 exit(1);
             }
@@ -377,6 +378,7 @@ int main(int argc, char *argv[]) {
             procFile = realpath(argv[2], nullptr);
             outputDir = realpath(argv[3], nullptr);
             if( access(outputDir, F_OK) != 0){
+                info("OutputDir: %s\n", outputDir);
                 perror("Output dir not exist!\n");
                 exit(1);
             }

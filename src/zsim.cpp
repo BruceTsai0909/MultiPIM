@@ -28,8 +28,11 @@
 
 #include "zsim.h"
 #include <algorithm>
+#define _SIGNAL_H
 //#include <bits/signum.h>
-#include <signal.h>
+#include <signum.h>
+#undef _SIGNAL_H
+//#include <signal.h>
 #include <dlfcn.h>
 #include <execinfo.h>
 #include <fstream>
@@ -1714,14 +1717,16 @@ int main(int argc, char *argv[]) {
     if (procIdx == 0 && !gm_isready()) {  // process 0 can exec() without fork()ing first, so we must check gm_isready() to ensure we don't initialize twice
         masterProcess = true;
         if(KnobProcConfigFile.Value() == "")
-        SimInit(KnobConfigFile.Value().c_str(), KnobOutputDir.Value().c_str(), KnobShmid.Value(), KnobHarnessPid.Value());
-        else
-        SimInit(KnobConfigFile.Value().c_str(), KnobOutputDir.Value().c_str(), KnobShmid.Value(), KnobHarnessPid.Value(),KnobProcConfigFile.Value().c_str(), KnobProfileFile.Value().c_str());
+        {
+            SimInit(KnobConfigFile.Value().c_str(), KnobOutputDir.Value().c_str(), KnobShmid.Value(), KnobHarnessPid.Value());
+        }
+        else{
+            SimInit(KnobConfigFile.Value().c_str(), KnobOutputDir.Value().c_str(), KnobShmid.Value(), KnobHarnessPid.Value(),KnobProcConfigFile.Value().c_str(), KnobProfileFile.Value().c_str());
+        }
     } else {
         while (!gm_isready()) usleep(1000);  // wait till proc idx 0 initializes everything
         zinfo = static_cast<GlobSimInfo*>(gm_get_glob_ptr());
     }
-
     //If assertion below fails, use this to print maps
 #if 0
     futex_lock(&zinfo->ffLock); //whatever lock, just don't interleave
